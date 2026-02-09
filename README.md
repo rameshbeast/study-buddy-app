@@ -1,9 +1,9 @@
 # study-buddy-app
 ## Team Members
 Ramesh Bist
-Fabin Gill
-Amhed
-Shishir
+Fabian Gill
+Ahmed Hassan
+Shishir Gotame
 ## Project Description
 The Study Buddy App is a collaborative study support platform designed to help university students organize their learning activities and work together effectively.
 
