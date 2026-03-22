@@ -1,4 +1,3 @@
-cat > backend/package.json << 'EOF'
 {
   "name": "study-buddy-app",
   "version": "1.0.0",
@@ -10,4 +9,3 @@ cat > backend/package.json << 'EOF'
     "pug": "^3.0.2"
   }
 }
-EOF
