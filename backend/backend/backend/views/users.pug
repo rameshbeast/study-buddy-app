@@ -1,3 +1,18 @@
-h1 Users
-each user in users
-  a(href="/profile/" + user.id)= user.name
+cat > backend/views/users.pug << 'EOF'
+extends layout
+
+block content
+  h2 Find Study Partners
+  p(style='color:#666; margin-bottom:20px') #{users.length} students registered
+
+  each user in users
+    .card
+      h3(style='margin-bottom:4px')= user.name
+      p(style='color:#666; font-size:14px; margin-bottom:4px')= user.course
+      p(style='font-size:13px; color:#888; margin-bottom:8px') Available: #{user.availability}
+      if user.subjects
+        div(style='margin-bottom:8px')
+          each subject in user.subjects.split(',')
+            span.tag= subject.trim()
+      a(href=`/users/${user.id}`) View Profile →
+EOF

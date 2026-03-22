@@ -1,52 +1,82 @@
-const express = require("express");
+cat > backend/app.js << 'EOF'
+const express = require('express');
+const mysql = require('mysql2');
+const path = require('path');
+
 const app = express();
-const mysql = require("mysql2");
 
-app.set("view engine", "pug");
-app.set("views", "./backend/views");
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: true }));
 
-const db = mysql.createConnection({
-  host: "db",
-  user: "root",
-  password: "password",
-  database: "studybuddy"
+const db = mysql.createPool({
+  host: process.env.DB_HOST || 'db',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_NAME || 'studybuddy',
+  waitForConnections: true,
+  connectionLimit: 10,
 });
 
-db.connect();
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
 
-// USERS
-app.get("/users", (req, res) => {
-  db.query("SELECT * FROM users", (err, result) => {
-    res.render("users", { users: result });
+app.get('/users', (req, res) => {
+  db.query('SELECT * FROM users', (err, users) => {
+    if (err) throw err;
+    res.render('users', { users });
   });
 });
 
-// PROFILE
-app.get("/profile/:id", (req, res) => {
-  db.query("SELECT * FROM users WHERE id=?", [req.params.id], (err, result) => {
-    res.render("profile", { user: result[0] });
+app.get('/users/:id', (req, res) => {
+  db.query('SELECT * FROM users WHERE id = ?', [req.params.id], (err, rows) => {
+    if (err) throw err;
+    res.render('profile', { user: rows[0] });
   });
 });
 
-// SESSIONS
-app.get("/sessions", (req, res) => {
-  db.query("SELECT * FROM sessions", (err, result) => {
-    res.render("sessions", { sessions: result });
+app.get('/sessions', (req, res) => {
+  db.query(`
+    SELECT s.*, u.name AS author 
+    FROM sessions s 
+    JOIN users u ON s.user_id = u.id
+  `, (err, sessions) => {
+    if (err) throw err;
+    res.render('sessions', { sessions });
   });
 });
 
-// DETAIL
-app.get("/sessions/:id", (req, res) => {
-  db.query("SELECT * FROM sessions WHERE id=?", [req.params.id], (err, result) => {
-    res.render("detail", { session: result[0] });
+app.get('/sessions/:id', (req, res) => {
+  db.query(`
+    SELECT s.*, u.name AS author 
+    FROM sessions s 
+    JOIN users u ON s.user_id = u.id 
+    WHERE s.id = ?
+  `, [req.params.id], (err, rows) => {
+    if (err) throw err;
+    db.query(`
+      SELECT t.name FROM tags t 
+      JOIN session_tags st ON t.id = st.tag_id 
+      WHERE st.session_id = ?
+    `, [req.params.id], (err2, tags) => {
+      if (err2) throw err2;
+      res.render('session-detail', { session: rows[0], tags });
+    });
   });
 });
 
-// TAGS
-app.get("/tags", (req, res) => {
-  db.query("SELECT * FROM tags", (err, result) => {
-    res.render("tags", { tags: result });
+app.get('/tags', (req, res) => {
+  db.query('SELECT * FROM tags', (err, tags) => {
+    if (err) throw err;
+    res.render('tags', { tags });
   });
 });
 
-app.listen(3000);
+app.get('/', (req, res) => res.redirect('/sessions'));
+
+app.listen(3000, () => {
+  console.log('Study Buddy running at http://localhost:3000');
+});
+EOF
