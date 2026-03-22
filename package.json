@@ -1,0 +1,13 @@
+cat > backend/package.json << 'EOF'
+{
+  "name": "study-buddy-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": { "start": "node app.js" },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "pug": "^3.0.2"
+  }
+}
+EOF
