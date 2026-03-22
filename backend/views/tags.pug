@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h2 Tags / Categories
+  div(style='margin-top:16px')
+    each tag in tags
+      span.tag(style='font-size:14px; padding:8px 16px; margin:4px; display:inline-block;')= tag.name
