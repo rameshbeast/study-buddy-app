@@ -1,4 +1,3 @@
-cat > db/init.sql << 'EOF'
 CREATE DATABASE IF NOT EXISTS studybuddy;
 USE studybuddy;
 
@@ -50,4 +49,3 @@ INSERT INTO sessions (title, description, date, location, user_id) VALUES
 INSERT INTO tags (name) VALUES ('Databases'),('SQL'),('MySQL'),('Python'),('OOP'),('Express'),('Pug');
 
 INSERT INTO session_tags (session_id, tag_id) VALUES (1,1),(1,2),(1,3),(2,4),(2,5),(3,6),(3,7);
-EOF
