@@ -1,5 +1,4 @@
-cat > docker-compose.yml << 'EOF'
-version: '3.8'
+version: "3.8"
 services:
   app:
     build: .
@@ -31,4 +30,3 @@ services:
       retries: 5
 volumes:
   db_data:
-EOF
