@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  a(href='/sessions') ← Back to Sessions
+  .card(style='margin-top:16px')
+    h2(style='margin-bottom:8px')= session.title
+    p(style='color:#666; margin-bottom:12px') Created by #{session.author}
+    if tags && tags.length
+      div(style='margin-bottom:14px')
+        each tag in tags
+          span.tag= tag.name
+    hr
+    p(style='margin-bottom:6px')
+      strong Date: 
+      | #{session.date}
+    p(style='margin-bottom:6px')
+      strong Location: 
+      | #{session.location}
+    if session.description
+      div(style='margin-top:12px')
+        strong Description:
+        p(style='margin-top:6px; color:#555')= session.description
+    div(style='margin-top:20px')
+      a.btn(href='#') Join Session
