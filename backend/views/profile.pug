@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  a(href='/users') Back to Users
+  .card(style='margin-top:16px')
+    h2(style='margin-bottom:4px')= user.name
+    p(style='color:#666; margin-bottom:12px')= user.course
+    hr
+    p(style='margin-bottom:8px')
+      strong Availability: 
+      | #{user.availability}
+    if user.subjects
+      div(style='margin-bottom:12px')
+        strong Topics:
+        br
+        each subject in user.subjects.split(',')
+          span.tag= subject.trim()
+    if user.bio
+      div(style='margin-top:12px')
+        strong Bio:
+        p(style='margin-top:6px; color:#555')= user.bio
