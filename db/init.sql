@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS session_tags (
 );
 
 INSERT INTO users (name, email, password, course, subjects, availability, bio) VALUES
-('Jane Doe','jane@uni.edu','hashed_pw','Bachelor of IT','Databases,Web Dev,Python,SQL','Mon/Wed afternoons','Second year IT student.'),
+('Jane Doe','jane@uni.edu','hashed_pw','Bachelor of Information Technology','Databases,Web Dev,Python,SQL','Mon/Wed afternoons','Second year Information Technology student.'),
 ('Alex Smith','alex@uni.edu','hashed_pw','Computer Science','Python,Algorithms,OOP','Tue/Thu','CS student who loves Python.'),
 ('Mia Kim','mia@uni.edu','hashed_pw','Software Engineering','React,Node.js,Express','Fridays','Software Eng student.');
 
