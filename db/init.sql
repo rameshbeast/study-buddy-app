@@ -3,22 +3,22 @@ USE studybuddy;
 
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  email VARCHAR(150) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  course VARCHAR(100),
-  subjects VARCHAR(255),
-  availability VARCHAR(100),
+  name VARCHAR(50) NOT NULL,
+  email VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(50) NOT NULL,
+  course VARCHAR(50),
+  subjects VARCHAR(50),
+  availability VARCHAR(50),
   bio TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS sessions (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(150) NOT NULL,
+  title VARCHAR(50) NOT NULL,
   description TEXT,
   date DATETIME,
-  location VARCHAR(100),
+  location VARCHAR(50),
   user_id INT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
